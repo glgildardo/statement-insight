@@ -9,7 +9,7 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isPro = ref.watch(proControllerProvider);
+    final proState = ref.watch(proControllerProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text(AppStrings.settingsTitle)),
@@ -18,14 +18,30 @@ class SettingsScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(isPro ? AppStrings.proEnabled : AppStrings.proDisabled),
+            Text(
+              proState.isUnlocked
+                  ? AppStrings.proEnabled
+                  : AppStrings.proDisabled,
+            ),
             const SizedBox(height: 12),
             ElevatedButton(
-              onPressed: () {
-                ref.read(proControllerProvider.notifier).restorePurchases();
-              },
-              child: const Text(AppStrings.restorePurchases),
+              onPressed: proState.loading
+                  ? null
+                  : () {
+                      ref
+                          .read(proControllerProvider.notifier)
+                          .restorePurchases();
+                    },
+              child: Text(
+                proState.loading
+                    ? AppStrings.restoringPurchases
+                    : AppStrings.restorePurchases,
+              ),
             ),
+            if (proState.errorMessage != null) ...<Widget>[
+              const SizedBox(height: 12),
+              Text(proState.errorMessage!),
+            ],
           ],
         ),
       ),
