@@ -17,7 +17,9 @@ class AppStrings {
   static const proDisabled = 'Pro no activado';
   static const restorePurchases = 'Restaurar compras';
   static const exportPdf = 'Exportar PDF';
+  static const generatingPdf = 'Generando PDF...';
   static const importSuccess = 'Estado de cuenta importado correctamente';
   static const fileTooLarge = 'El archivo supera el limite de 5MB';
   static const dashboardLoadError = 'No se pudo cargar el resumen financiero';
+  static const reportGenerateError = 'No se pudo generar el reporte';
 }

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/categorization/keyword_categorizer.dart';
 import '../core/categorization/transaction_categorizer.dart';
 import '../core/parsing/bank_parser_registry.dart';
+import '../core/pdf/local_report_pdf_generator.dart';
+import '../core/pdf/report_pdf_generator.dart';
 import '../core/storage/app_database.dart';
 import '../core/storage/drift_settings_repository.dart';
 import '../core/storage/drift_statement_repository.dart';
@@ -37,4 +39,8 @@ final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
 
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   return DriftSettingsRepository(ref.watch(appDatabaseProvider));
+});
+
+final reportPdfGeneratorProvider = Provider<ReportPdfGenerator>((ref) {
+  return LocalReportPdfGenerator();
 });

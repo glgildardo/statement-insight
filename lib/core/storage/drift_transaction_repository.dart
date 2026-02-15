@@ -64,4 +64,37 @@ class DriftTransactionRepository implements TransactionRepository {
       byCategory: breakdown,
     );
   }
+
+  @override
+  Future<List<TopExpense>> topExpensesForPeriod({
+    required DateTime from,
+    required DateTime to,
+    int limit = 5,
+  }) async {
+    await _db.ensureReady();
+
+    final rows = await _db.customSelect(
+      '''
+      SELECT description, ABS(amount) AS total
+      FROM transactions
+      WHERE date BETWEEN ? AND ? AND amount < 0
+      ORDER BY ABS(amount) DESC
+      LIMIT ?;
+      ''',
+      variables: <Variable<Object>>[
+        Variable<String>(from.toIso8601String()),
+        Variable<String>(to.toIso8601String()),
+        Variable<int>(limit),
+      ],
+    ).get();
+
+    return rows
+        .map(
+          (row) => TopExpense(
+            description: row.read<String>('description'),
+            amount: row.read<double>('total'),
+          ),
+        )
+        .toList();
+  }
 }
