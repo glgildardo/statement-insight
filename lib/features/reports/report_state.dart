@@ -1,9 +1,11 @@
+import '../../app/localization/message_key.dart';
+
 class ReportState {
   const ReportState({
     required this.loading,
     required this.exporting,
     required this.isProUnlocked,
-    this.errorMessage,
+    this.errorKey,
     this.pdfBytes,
   });
 
@@ -11,27 +13,27 @@ class ReportState {
       : loading = false,
         exporting = false,
         isProUnlocked = false,
-        errorMessage = null,
+        errorKey = null,
         pdfBytes = null;
 
   final bool loading;
   final bool exporting;
   final bool isProUnlocked;
-  final String? errorMessage;
+  final MessageKey? errorKey;
   final List<int>? pdfBytes;
 
   ReportState copyWith({
     bool? loading,
     bool? exporting,
     bool? isProUnlocked,
-    String? errorMessage,
+    MessageKey? errorKey,
     List<int>? pdfBytes,
   }) {
     return ReportState(
       loading: loading ?? this.loading,
       exporting: exporting ?? this.exporting,
       isProUnlocked: isProUnlocked ?? this.isProUnlocked,
-      errorMessage: errorMessage,
+      errorKey: errorKey,
       pdfBytes: pdfBytes ?? this.pdfBytes,
     );
   }

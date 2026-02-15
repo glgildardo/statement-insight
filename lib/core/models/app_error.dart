@@ -1,11 +1,10 @@
+import '../../app/localization/message_key.dart';
+
 class AppError {
-  const AppError({
-    required this.code,
-    required this.messageEs,
-    this.debugDetails,
-  });
+  const AppError(
+      {required this.code, required this.messageKey, this.debugDetails});
 
   final String code;
-  final String messageEs;
+  final MessageKey messageKey;
   final String? debugDetails;
 }

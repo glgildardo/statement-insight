@@ -25,7 +25,9 @@ This file tracks implementation progress against `AI_EXECUTION_GUIDE.md` and `./
   - local extractor interface
   - concrete local PDF text extractor implementation
   - max size guard (5MB)
-  - report generator contract
+  - concrete PDF report generator implementation
+- In-app purchase adapter integrated with restore flow and Pro persistence.
+- Localization migrated to ARB + `intl` generated `AppLocalizations`.
 - Dashboard view with totals and category pie chart (`fl_chart`).
 - Required unit tests:
   - categorization
@@ -34,6 +36,4 @@ This file tracks implementation progress against `AI_EXECUTION_GUIDE.md` and `./
 
 ## Pending Wiring (Project Integration)
 
-- Implement concrete PDF report generator using `pdf` + `printing`.
-- Implement in-app purchase adapter with restore flow and Pro persistence.
-- Replace string constants with generated `intl` ARB localization pipeline.
+- No pending items from options 1-5.

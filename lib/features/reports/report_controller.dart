@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../app/localization/app_strings.dart';
+import '../../app/localization/message_key.dart';
 import '../../app/providers.dart';
 import 'report_state.dart';
 
@@ -15,7 +15,7 @@ class ReportController extends Notifier<ReportState> {
   ReportState build() => const ReportState.initial();
 
   Future<void> loadAccess() async {
-    state = state.copyWith(loading: true, errorMessage: null);
+    state = state.copyWith(loading: true, errorKey: null);
     final isPro = await ref.read(settingsRepositoryProvider).isProUnlocked();
     state = state.copyWith(loading: false, isProUnlocked: isPro);
   }
@@ -23,12 +23,12 @@ class ReportController extends Notifier<ReportState> {
   Future<void> exportCurrentMonthReport() async {
     if (!state.isProUnlocked) {
       state = state.copyWith(
-        errorMessage: AppStrings.proRequired,
+        errorKey: MessageKey.proRequired,
       );
       return;
     }
 
-    state = state.copyWith(exporting: true, errorMessage: null, pdfBytes: null);
+    state = state.copyWith(exporting: true, errorKey: null, pdfBytes: null);
     try {
       final now = DateTime.now();
       final start = DateTime(now.year, now.month, 1);
@@ -65,7 +65,7 @@ class ReportController extends Notifier<ReportState> {
     } catch (_) {
       state = state.copyWith(
         exporting: false,
-        errorMessage: AppStrings.reportGenerateError,
+        errorKey: MessageKey.reportGenerateError,
       );
     }
   }

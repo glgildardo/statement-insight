@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../app/localization/app_strings.dart';
+import '../../app/localization/message_key.dart';
 import '../../app/providers.dart';
 import 'pro_state.dart';
 
@@ -18,11 +18,11 @@ class ProController extends Notifier<ProState> {
   Future<void> loadProStatus() async {
     final isUnlocked =
         await ref.read(settingsRepositoryProvider).isProUnlocked();
-    state = state.copyWith(isUnlocked: isUnlocked, errorMessage: null);
+    state = state.copyWith(isUnlocked: isUnlocked, errorKey: null);
   }
 
   Future<void> restorePurchases() async {
-    state = state.copyWith(loading: true, errorMessage: null);
+    state = state.copyWith(loading: true, errorKey: null);
     try {
       final restored =
           await ref.read(purchaseGatewayProvider).restorePurchases();
@@ -35,7 +35,7 @@ class ProController extends Notifier<ProState> {
     } catch (_) {
       state = state.copyWith(
         loading: false,
-        errorMessage: AppStrings.restorePurchaseError,
+        errorKey: MessageKey.restorePurchaseError,
       );
     }
   }

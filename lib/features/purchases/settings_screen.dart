@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../app/localization/app_strings.dart';
+import '../../app/localization/localization_mapper.dart';
 import 'pro_controller.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -9,19 +10,18 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final proState = ref.watch(proControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.settingsTitle)),
+      appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              proState.isUnlocked
-                  ? AppStrings.proEnabled
-                  : AppStrings.proDisabled,
+              proState.isUnlocked ? l10n.proEnabled : l10n.proDisabled,
             ),
             const SizedBox(height: 12),
             ElevatedButton(
@@ -34,13 +34,13 @@ class SettingsScreen extends ConsumerWidget {
                     },
               child: Text(
                 proState.loading
-                    ? AppStrings.restoringPurchases
-                    : AppStrings.restorePurchases,
+                    ? l10n.restoringPurchases
+                    : l10n.restorePurchases,
               ),
             ),
-            if (proState.errorMessage != null) ...<Widget>[
+            if (proState.errorKey != null) ...<Widget>[
               const SizedBox(height: 12),
-              Text(proState.errorMessage!),
+              Text(l10n.message(proState.errorKey!)),
             ],
           ],
         ),

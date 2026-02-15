@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:printing/printing.dart';
 
-import '../../app/localization/app_strings.dart';
+import '../../app/localization/localization_mapper.dart';
 import 'report_controller.dart';
 
 class ReportPreviewScreen extends ConsumerStatefulWidget {
@@ -24,16 +25,17 @@ class _ReportPreviewScreenState extends ConsumerState<ReportPreviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final reportState = ref.watch(reportControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.reportPreviewTitle)),
+      appBar: AppBar(title: Text(l10n.reportPreviewTitle)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (!reportState.isProUnlocked) const Text(AppStrings.proRequired),
+            if (!reportState.isProUnlocked) Text(l10n.proRequired),
             if (reportState.isProUnlocked)
               ElevatedButton(
                 onPressed: reportState.exporting
@@ -52,14 +54,12 @@ class _ReportPreviewScreenState extends ConsumerState<ReportPreviewScreen> {
                         }
                       },
                 child: Text(
-                  reportState.exporting
-                      ? AppStrings.generatingPdf
-                      : AppStrings.exportPdf,
+                  reportState.exporting ? l10n.generatingPdf : l10n.exportPdf,
                 ),
               ),
-            if (reportState.errorMessage != null) ...<Widget>[
+            if (reportState.errorKey != null) ...<Widget>[
               const SizedBox(height: 12),
-              Text(reportState.errorMessage!),
+              Text(l10n.message(reportState.errorKey!)),
             ],
           ],
         ),

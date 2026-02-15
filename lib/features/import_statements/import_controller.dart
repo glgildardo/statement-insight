@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../app/localization/app_strings.dart';
+import '../../app/localization/message_key.dart';
 import '../../app/providers.dart';
 import '../../core/models/app_error.dart';
-import '../../core/pdf/pdf_import_policy.dart';
 import '../../core/pdf/local_pdf_text_extractor.dart';
+import '../../core/pdf/pdf_import_policy.dart';
 import '../../core/pdf/pdf_text_extractor.dart';
 import 'import_state.dart';
 
@@ -24,7 +24,7 @@ class ImportController extends Notifier<ImportState> {
   Future<void> importStatement(File file) async {
     state = state.copyWith(
       status: ImportStatus.loading,
-      messageEs: null,
+      messageKey: null,
       error: null,
     );
 
@@ -32,7 +32,7 @@ class ImportController extends Notifier<ImportState> {
       if (!PdfImportPolicy().isAllowed(file)) {
         throw const _ImportException(
           code: 'file_too_large',
-          messageEs: AppStrings.fileTooLarge,
+          messageKey: MessageKey.fileTooLarge,
         );
       }
 
@@ -56,21 +56,21 @@ class ImportController extends Notifier<ImportState> {
 
       state = state.copyWith(
         status: ImportStatus.success,
-        messageEs: AppStrings.importSuccess,
+        messageKey: MessageKey.importSuccess,
       );
     } on _ImportException catch (error) {
       state = state.copyWith(
         status: ImportStatus.failure,
-        messageEs: error.messageEs,
-        error: AppError(code: error.code, messageEs: error.messageEs),
+        messageKey: error.messageKey,
+        error: AppError(code: error.code, messageKey: error.messageKey),
       );
     } catch (error) {
       state = state.copyWith(
         status: ImportStatus.failure,
-        messageEs: AppStrings.parserError,
+        messageKey: MessageKey.parserError,
         error: AppError(
           code: 'import_failure',
-          messageEs: AppStrings.parserError,
+          messageKey: MessageKey.parserError,
         ),
       );
     }
@@ -78,8 +78,8 @@ class ImportController extends Notifier<ImportState> {
 }
 
 class _ImportException implements Exception {
-  const _ImportException({required this.code, required this.messageEs});
+  const _ImportException({required this.code, required this.messageKey});
 
   final String code;
-  final String messageEs;
+  final MessageKey messageKey;
 }

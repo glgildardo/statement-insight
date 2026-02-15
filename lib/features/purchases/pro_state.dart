@@ -1,28 +1,30 @@
+import '../../app/localization/message_key.dart';
+
 class ProState {
   const ProState({
     required this.loading,
     required this.isUnlocked,
-    this.errorMessage,
+    this.errorKey,
   });
 
   const ProState.initial()
       : loading = false,
         isUnlocked = false,
-        errorMessage = null;
+        errorKey = null;
 
   final bool loading;
   final bool isUnlocked;
-  final String? errorMessage;
+  final MessageKey? errorKey;
 
   ProState copyWith({
     bool? loading,
     bool? isUnlocked,
-    String? errorMessage,
+    MessageKey? errorKey,
   }) {
     return ProState(
       loading: loading ?? this.loading,
       isUnlocked: isUnlocked ?? this.isUnlocked,
-      errorMessage: errorMessage,
+      errorKey: errorKey,
     );
   }
 }

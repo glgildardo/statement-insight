@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../app/localization/app_strings.dart';
+import '../../app/localization/message_key.dart';
 import '../../app/providers.dart';
 import '../../core/models/app_error.dart';
 import 'dashboard_state.dart';
@@ -34,7 +34,7 @@ class DashboardController extends Notifier<DashboardState> {
         loading: false,
         error: const AppError(
           code: 'dashboard_load_error',
-          messageEs: AppStrings.dashboardLoadError,
+          messageKey: MessageKey.dashboardLoadError,
         ),
       );
     }

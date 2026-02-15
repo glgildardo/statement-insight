@@ -1,9 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../app/localization/app_strings.dart';
 import '../../core/models/transaction_category.dart';
 import 'dashboard_controller.dart';
 
@@ -28,11 +28,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(dashboardControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.dashboardTitle),
+        title: Text(l10n.dashboardTitle),
         actions: <Widget>[
           IconButton(
             onPressed: () => context.goNamed('report-preview'),
@@ -49,16 +50,14 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _MetricCard(label: AppStrings.totalSpent, value: state.totalSpent),
-            _MetricCard(
-              label: AppStrings.totalIncome,
-              value: state.totalIncome,
-            ),
-            _MetricCard(label: AppStrings.netBalance, value: state.netBalance),
+            _MetricCard(label: l10n.totalSpent, value: state.totalSpent),
+            _MetricCard(label: l10n.totalIncome, value: state.totalIncome),
+            _MetricCard(label: l10n.netBalance, value: state.netBalance),
             const SizedBox(height: 12),
             Expanded(
               child: PieChart(
-                PieChartData(sections: _toSections(state.categoryBreakdown)),
+                PieChartData(
+                    sections: _toSections(l10n, state.categoryBreakdown)),
               ),
             ),
           ],
@@ -68,13 +67,14 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   }
 
   List<PieChartSectionData> _toSections(
+    AppLocalizations l10n,
     Map<TransactionCategory, double> values,
   ) {
     if (values.isEmpty) {
       return <PieChartSectionData>[
         PieChartSectionData(
           color: Colors.grey,
-          title: AppStrings.noData,
+          title: l10n.noData,
           value: 1,
         ),
       ];
