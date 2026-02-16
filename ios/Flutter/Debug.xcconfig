@@ -1,1 +1,6 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
 #include "Generated.xcconfig"
+
+// Prevent simulator builds from invoking framework codesigning.
+CODE_SIGNING_REQUIRED[sdk=iphonesimulator*]=NO
+CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]=NO
