@@ -6,7 +6,7 @@ import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-class AppDatabase extends DatabaseConnectionUser {
+class AppDatabase extends GeneratedDatabase {
   AppDatabase._(super.executor) {
     _ready = _migrate();
   }
@@ -26,6 +26,12 @@ class AppDatabase extends DatabaseConnectionUser {
   }
 
   late final Future<void> _ready;
+
+  @override
+  int get schemaVersion => 1;
+
+  @override
+  Iterable<TableInfo<Table, Object?>> get allTables => const [];
 
   Future<void> ensureReady() => _ready;
 
@@ -74,5 +80,6 @@ class AppDatabase extends DatabaseConnectionUser {
     );
   }
 
+  @override
   Future<void> close() => executor.close();
 }

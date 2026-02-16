@@ -24,14 +24,13 @@ class Transactions extends Table {
 
   TextColumn get statementId => text().references(Statements, #id)();
 
-  DateTimeColumn get date => dateTime().indexed()();
+  DateTimeColumn get date => dateTime()();
 
   TextColumn get description => text()();
 
   RealColumn get amount => real()();
 
-  TextColumn get category =>
-      text().map(const TransactionCategoryConverter()).indexed()();
+  TextColumn get category => text().map(const TransactionCategoryConverter())();
 
   RealColumn get confidence => real()();
 

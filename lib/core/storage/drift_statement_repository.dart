@@ -1,5 +1,3 @@
-import 'package:drift/drift.dart';
-
 import '../models/parsed_statement.dart';
 import '../models/transaction_category.dart';
 import 'app_database.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'dart:typed_data';
 
 import '../../app/localization/message_key.dart';
 import '../../app/providers.dart';
@@ -61,7 +62,10 @@ class ReportController extends Notifier<ReportState> {
             .toList(),
       );
 
-      state = state.copyWith(exporting: false, pdfBytes: pdf);
+      state = state.copyWith(
+        exporting: false,
+        pdfBytes: Uint8List.fromList(pdf),
+      );
     } catch (_) {
       state = state.copyWith(
         exporting: false,

@@ -68,7 +68,7 @@ class ImportController extends Notifier<ImportState> {
       state = state.copyWith(
         status: ImportStatus.failure,
         messageKey: MessageKey.parserError,
-        error: AppError(
+        error: const AppError(
           code: 'import_failure',
           messageKey: MessageKey.parserError,
         ),

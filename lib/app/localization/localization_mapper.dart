@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:statement_insight/app/l10n/app_localizations.dart';
 
 import 'message_key.dart';
 

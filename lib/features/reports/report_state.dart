@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import '../../app/localization/message_key.dart';
 
 class ReportState {
@@ -20,14 +22,14 @@ class ReportState {
   final bool exporting;
   final bool isProUnlocked;
   final MessageKey? errorKey;
-  final List<int>? pdfBytes;
+  final Uint8List? pdfBytes;
 
   ReportState copyWith({
     bool? loading,
     bool? exporting,
     bool? isProUnlocked,
     MessageKey? errorKey,
-    List<int>? pdfBytes,
+    Uint8List? pdfBytes,
   }) {
     return ReportState(
       loading: loading ?? this.loading,

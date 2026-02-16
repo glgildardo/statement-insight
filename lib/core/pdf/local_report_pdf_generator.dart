@@ -41,7 +41,7 @@ class LocalReportPdfGenerator implements ReportPdfGenerator {
             style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
           ),
           pw.SizedBox(height: 8),
-          pw.Table.fromTextArray(
+          pw.TableHelper.fromTextArray(
             headers: const <String>['Categoria', 'Total'],
             data: categoryBreakdown.entries
                 .map(
